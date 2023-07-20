@@ -1,4 +1,4 @@
-![image](https://github.com/WEHI-ResearchComputing/Imaging-Getting-Started/assets/89517597/c03172d8-a8cc-479b-8653-f62a5bce285f)# Democratising-Imaging
+# Democratising-Imaging
 
 This repo will contain introductory wiki for the [Imaging Project](https://wehi-researchcomputing.github.io/student-imaging). This wiki serves as a central hub for documentation, guides, and resources related to the project. It provides valuable information to help contributors and users understand the project and get involved.
 
