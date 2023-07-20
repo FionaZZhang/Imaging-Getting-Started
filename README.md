@@ -12,7 +12,7 @@ This repo will contain introductory wiki for the [Imaging Project](https://wehi-
 
 
 ## Introduction
-The core of the project is to make the HPC democratisable for [Imaging](https://imaging.wehi.edu.au/) researchers at WEHI. The project aims to propose a user friendly and easily accessible workflow for bio imaging. It also include a detailed analysis for the platforms Galaxy and Nextflow.
+The core of the project is to make the HPC democratisable for [Imaging](https://imaging.wehi.edu.au/) researchers at WEHI. The project aims to propose a user friendly and easily accessible workflow for analysing 3D Lightsheet Image data using Milton HPC. It also include a detailed analysis for the platforms Galaxy and Nextflow.
 
 
 For students in this project, follow these steps to get started:
