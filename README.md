@@ -27,6 +27,7 @@ For students in this project, follow these steps to get started:
 This project work with data produced by [3D Lightsheet Microscopy](https://www.youtube.com/watch?v=afIkWHx3duc). The [presentation of previous students](https://wehieduau.sharepoint.com/:v:/r/sites/StudentInternGroupatWEHI/Shared%20Documents/Image%20Introduction/Imaging%20-%20Dingcheng%20Lu,%20Cassiel%20Huo,%20Starry%20Liu-20230525_110436-Meeting%20Recording.mp4?csf=1&web=1&e=TTs5gC) can be accessed via Teams.
 
 ## Milton HPC
+Milton is the HPC used at WEHI. Follow [Milton Setup](https://wehieduau.sharepoint.com/sites/rc2/SitePages/using-milton.aspx?web=1&xsdata=MDV8MDF8fGJhMTA1Y2QwNGRiNDQ0ZTI0Mjk0MDhkYWQxYTU1OWQ4fGFhN2M3MmUyYzVjZjRhNDBhMjJhYTU4NWMwNGNhMDdjfDB8MHw2MzgwNTI4MDUzMzM1MDA1NjR8VW5rbm93bnxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT18MXxNVFkyT1RZNE16Y3pNalk1TXpzeE5qWTVOamd6TnpNeU5qa3pPekU1T20xbFpYUnBibWRmVGxScmVGcEhWbWhaTWtWMFRWUkdhazE1TURCTlIxbDRURlJuZWxwRVFYUk9WRVpzVFZSck1VNTZRbXhhVjFadFFIUm9jbVZoWkM1Mk1nPT18MDRhYTYxYmU5YmJiNDAxNDQyOTQwOGRhZDFhNTU5ZDh8NTExMjg2MjFiZmM0NDFiMGE2ZGUzOGQ2YWYzMDNlMmE%3D&sdata=blovM3BzRmQwV1J3YzBhRGExd2NmenpXR2VDMmxDQWVOclV3eUIzcnh5az0%3D&ovuser=0e5bf3cf-1ff4-46b7-9176-52c538c22a4d%2Csudiz%40student.unimelb.edu.au&OR=Teams-HL&CT=1670280871424&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMjEwMjgwNzIwMCIsIkhhc0ZlZGVyYXRlZFVzZXIiOnRydWV9) to get started.
 
 ## Galaxy
 
