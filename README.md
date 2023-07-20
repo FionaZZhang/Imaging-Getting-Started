@@ -9,6 +9,7 @@ This repo will contain introductory wiki for the [Imaging Project](https://wehi-
 - Milton HPC
 - Galaxy
 - Nextflow
+- Other directories
 
 
 ## Introduction
@@ -80,6 +81,11 @@ Cons:
 - Initial Learning Curve: Users need to learn the Nextflow DSL and command-line commands to develop and run workflows effectively.
 - Development Overhead: Creating workflows as code requires more initial development effort compared to the visual workflow design in Galaxy.
 - Limited Built-in Toolset: Unlike Galaxy, Nextflow does not come with an extensive set of pre-built tools; users need to script their own tools or use third-party tools.
+
+## Other Directories
+
+- [Shared Drive](https://drive.google.com/drive/folders/186MxmarfeZqoJfcsiaIYojX-FTjOZioU?usp=drive_link)
+- [Meeting notes](https://docs.google.com/document/d/1UEPsfUaInItshv7jPXXyo1aayWIt4zQKBGHZNqaDdr4/edit?usp=sharing)
 
 
 ---
