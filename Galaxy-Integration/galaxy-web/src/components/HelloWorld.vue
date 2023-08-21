@@ -12,16 +12,16 @@
             <option disabled value="">Please select a workflow</option>
             <option value="workflow1">Normalize Histogram</option>
             <option value="workflow2">Image Filtering</option>
-            <option value="workflow2">Segmentation</option>
+            <option value="workflow3">Segmentation</option>
         </select>
         <button @click="executeWorkflow">Execute Workflow</button>
     </div>
     <br>
     <!-- Upload button -->
     <div>
-      <input type="file" id="fileUpload" accept=".jpg,.jpeg,.png,.zip" multiple webkitdirectory style="display: none;">
+      <input type="file" id="fileUpload" @change="handleFiles" accept="image/jpeg, image/png" style="display: none;">
       <label for="fileUpload" class="custom-file-upload">
-        Click here to Upload Images/Folders/ZIP
+        Click here to Upload Images
       </label>
     </div>
 
@@ -40,10 +40,43 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  data() {
+    return {
+      selectedWorkflow: '',
+      uploadedFiles: null
+    }
+  },
+  methods: {
+    handleFiles(event) {
+      this.uploadedFiles = event.target.files;
+    },
+    async executeWorkflow() {
+      if (!this.selectedWorkflow || !this.uploadedFiles) {
+        alert('Please select a workflow and upload files');
+        return;
+      }
+      const formData = new FormData();
+      for (let i = 0; i < this.uploadedFiles.length; i++) {
+        formData.append('files', this.uploadedFiles[i]);
+      }
+      formData.append('workflow', this.selectedWorkflow);
+
+      try {
+        const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/response`, formData);
+        console.log(response.data);
+        // handle successful response
+      } catch (error) {
+        console.error('Error uploading files:', error);
+        // handle error response
+      }
+    }
   }
 }
 </script>
