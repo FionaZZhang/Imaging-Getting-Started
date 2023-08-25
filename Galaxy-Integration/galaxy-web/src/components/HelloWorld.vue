@@ -28,6 +28,8 @@
     <h3>References</h3>
     <ul>
       <li><a href="https://training.galaxyproject.org/training-material/topics/imaging/tutorials/imaging-introduction/tutorial.html" target="_blank" rel="noopener">galaxy-tutorial</a></li>
+      <li><a href="https://bioblend.readthedocs.io/en/latest/" target="_blank" rel="noopener">bioblend</a></li>
+
     </ul>
     <h3>Directories</h3>
     <ul>
@@ -69,7 +71,7 @@ export default {
       formData.append('workflow', this.selectedWorkflow);
 
       try {
-        const response = await axios.post(`${process.env.VUE_APP_BACKEND_URL}/response`, formData);
+        const response = await axios.post(`http://127.0.0.1:5000/response`, formData);
         console.log(response.data);
         // handle successful response
       } catch (error) {
