@@ -1,0 +1,51 @@
+Sept-03 21:52:34.259 [main] DEBUG nextflow.cli.Launcher - $> nextflow run main.nf
+Sept-03 21:52:34.284 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.04.3
+Sept-03 21:52:34.297 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/Users/fionaf/.nextflow/plugins; core-plugins: nf-amazon@1.16.2,nf-azure@1.0.1,nf-codecommit@0.1.4,nf-console@1.0.5,nf-ga4gh@1.0.5,nf-google@1.7.3,nf-tower@1.5.12,nf-wave@0.8.4
+Sept-03 21:52:34.303 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Sept-03 21:52:34.304 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Sept-03 21:52:34.305 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Sept-03 21:52:34.310 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Sept-03 21:52:34.347 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 by global default
+Sept-03 21:52:34.357 [main] INFO  nextflow.cli.CmdRun - Launching `main.nf` [soggy_swirles] DSL2 - revision: 13cb394184
+Sept-03 21:52:34.357 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Sept-03 21:52:34.357 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
+Sept-03 21:52:34.361 [main] DEBUG nextflow.secret.LocalSecretsProvider - Secrets store: /Users/fionaf/.nextflow/secrets/store.json
+Sept-03 21:52:34.364 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@28cb9120] - activable => nextflow.secret.LocalSecretsProvider@28cb9120
+Sept-03 21:52:34.402 [main] DEBUG nextflow.Session - Session UUID: 14881195-94f6-4a8a-a2fb-29d4bc4630f4
+Sept-03 21:52:34.402 [main] DEBUG nextflow.Session - Run name: soggy_swirles
+Sept-03 21:52:34.403 [main] DEBUG nextflow.Session - Executor pool size: 8
+Sept-03 21:52:34.409 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Sept-03 21:52:34.773 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 23.04.3 build 5875
+  Created: 11-08-2023 18:37 UTC (12-08-2023 04:37 AEDT)
+  System: Mac OS X 13.2.1
+  Runtime: Groovy 3.0.16 on OpenJDK 64-Bit Server VM 19.0.2+7-44
+  Encoding: UTF-8 (UTF-8)
+  Process: 1974@Fionas-MacBook-Pro-2.local [192.168.18.53]
+  CPUs: 8 - Mem: 24 GB (1.5 GB) - Swap: 5 GB (1.3 GB)
+Sept-03 21:52:34.783 [main] DEBUG nextflow.Session - Work-dir: /Users/fionaf/Desktop/Intern/Imaging-Getting-Started/Galaxy-Integration/nextflow-script/work [Mac OS X]
+Sept-03 21:52:34.783 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /Users/fionaf/Desktop/Intern/Imaging-Getting-Started/Galaxy-Integration/nextflow-script/bin
+Sept-03 21:52:34.790 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Sept-03 21:52:34.795 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Sept-03 21:52:34.807 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Sept-03 21:52:34.812 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 9; maxThreads: 1000
+Sept-03 21:52:34.846 [main] DEBUG nextflow.Session - Session start
+Sept-03 21:52:35.076 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Sept-03 21:52:35.102 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Sept-03 21:52:35.102 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Sept-03 21:52:35.106 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Sept-03 21:52:35.110 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=24 GB; capacity=8; pollInterval=100ms; dumpInterval=5m
+Sept-03 21:52:35.169 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: startWeb
+Sept-03 21:52:35.170 [main] DEBUG nextflow.Session - Igniting dataflow network (1)
+Sept-03 21:52:35.170 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > startWeb
+Sept-03 21:52:35.171 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Sept-03 21:52:35.171 [main] DEBUG nextflow.Session - Session await
+Sept-03 21:52:35.250 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Sept-03 21:52:35.251 [Task submitter] INFO  nextflow.Session - [f3/383ce3] Submitted process > startWeb
+Sept-03 21:55:25.806 [SIGINT handler] DEBUG nextflow.Session - Session aborted -- Cause: SIGINT
+Sept-03 21:55:25.824 [main] DEBUG nextflow.Session - Session await > all processes finished
+Sept-03 21:55:25.824 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Sept-03 21:55:25.829 [main] WARN  n.processor.TaskPollingMonitor - Killing running tasks (1)
+Sept-03 21:55:25.840 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=0ms; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=1; peakCpus=1; peakMemory=0; ]
+Sept-03 21:55:25.971 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Sept-03 21:55:25.978 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

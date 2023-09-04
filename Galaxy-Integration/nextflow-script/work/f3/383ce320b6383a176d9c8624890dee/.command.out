@@ -1,0 +1,24 @@
+
+> galaxy-web@0.1.0 build
+> vue-cli-service build
+
+All browser targets in the browserslist configuration have supported ES module.
+Therefore we don't build two separate bundles for differential loading.
+
+
+ DONE  Compiled successfully in 2202ms9:52:38 PM
+
+  File                                 Size               Gzipped
+
+  dist/js/chunk-vendors.405a1da3.js    113.67 KiB         42.19 KiB
+  dist/js/app.7022cedf.js              5.18 KiB           2.26 KiB
+  dist/css/app.e1b5c492.css            1.13 KiB           0.44 KiB
+
+  Images and other types of assets omitted.
+  Build at: 2023-09-03T11:52:38.741Z - Hash: 04f8334950e1a641 - Time: 2202ms
+
+ DONE  Build complete. The dist directory is ready to be deployed.
+ INFO  Check out deployment instructions at https://cli.vuejs.org/guide/deployment.html
+       
+ * Serving Flask app 'app'
+ * Debug mode: on

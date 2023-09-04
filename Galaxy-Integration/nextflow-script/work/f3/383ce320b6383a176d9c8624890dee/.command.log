@@ -1,0 +1,62 @@
+
+> galaxy-web@0.1.0 build
+> vue-cli-service build
+
+All browser targets in the browserslist configuration have supported ES module.
+Therefore we don't build two separate bundles for differential loading.
+
+
+-  Building for production...
+ DONE  Compiled successfully in 2202ms9:52:38 PM
+
+  File                                 Size               Gzipped
+
+  dist/js/chunk-vendors.405a1da3.js    113.67 KiB         42.19 KiB
+  dist/js/app.7022cedf.js              5.18 KiB           2.26 KiB
+  dist/css/app.e1b5c492.css            1.13 KiB           0.44 KiB
+
+  Images and other types of assets omitted.
+  Build at: 2023-09-03T11:52:38.741Z - Hash: 04f8334950e1a641 - Time: 2202ms
+
+ DONE  Build complete. The dist directory is ready to be deployed.
+ INFO  Check out deployment instructions at https://cli.vuejs.org/guide/deployment.html
+       
+ * Serving Flask app 'app'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 864-481-809
+127.0.0.1 - - [03/Sep/2023 21:52:41] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [03/Sep/2023 21:52:41] "GET /js/chunk-vendors.405a1da3.js HTTP/1.1" 200 -
+127.0.0.1 - - [03/Sep/2023 21:52:41] "GET /css/app.e1b5c492.css HTTP/1.1" 200 -
+127.0.0.1 - - [03/Sep/2023 21:52:41] "GET /js/app.7022cedf.js HTTP/1.1" 200 -
+127.0.0.1 - - [03/Sep/2023 21:52:41] "GET /img/WEHI_logo.273fc6ad.png HTTP/1.1" 200 -
+127.0.0.1 - - [03/Sep/2023 21:55:12] "[35m[1mPOST /response HTTP/1.1[0m" 500 -
+Traceback (most recent call last):
+  File "/Users/fionaf/anaconda3/envs/Imaging-Getting-Started/lib/python3.11/site-packages/flask/app.py", line 2213, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fionaf/anaconda3/envs/Imaging-Getting-Started/lib/python3.11/site-packages/flask/app.py", line 2193, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fionaf/anaconda3/envs/Imaging-Getting-Started/lib/python3.11/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fionaf/anaconda3/envs/Imaging-Getting-Started/lib/python3.11/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fionaf/anaconda3/envs/Imaging-Getting-Started/lib/python3.11/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fionaf/anaconda3/envs/Imaging-Getting-Started/lib/python3.11/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fionaf/Desktop/Intern/Imaging-Getting-Started/Galaxy-Integration/backend/app.py", line 31, in upload_image
+    file.save("inputs" + filename)
+  File "/Users/fionaf/anaconda3/envs/Imaging-Getting-Started/lib/python3.11/site-packages/werkzeug/datastructures/file_storage.py", line 125, in save
+    dst = open(dst, "wb")
+          ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'inputs./uploads/input.tif'
