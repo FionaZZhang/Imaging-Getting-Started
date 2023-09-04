@@ -19,12 +19,27 @@
     <br>
     <!-- Upload button -->
     <div>
-      <input type="file" id="fileUpload" @change="handleFiles" accept="image/jpeg, image/png" style="display: none;">
+      <input type="file" id="fileUpload" @change="handleFiles" accept="image/jpeg, image/png, image/tiff" style="display: none;">
       <label for="fileUpload" class="custom-file-upload">
         Click here to Upload Images
       </label>
     </div>
-
+    <!-- Display the image -->
+    <div v-if="convertedImageUrl" class="output-image-container">
+      <h3>Output Image</h3>
+      <div class="image-wrapper">
+        <img :src="convertedImageUrl" alt="Output Image" class="output-image">
+      </div>
+    </div>
+    <!-- Display State Times -->
+    <div v-if="stateTimes && Object.keys(stateTimes).length > 0">
+      <h3>State Status</h3>
+      <ul>
+        <li v-for="(time, state) in stateTimes" :key="state">
+          {{ state }}: {{ time }} seconds<br>
+        </li>
+      </ul>
+    </div>
     <h3>References</h3>
     <ul>
       <li><a href="https://training.galaxyproject.org/training-material/topics/imaging/tutorials/imaging-introduction/tutorial.html" target="_blank" rel="noopener">galaxy-tutorial</a></li>
@@ -43,6 +58,7 @@
 
 <script>
 import axios from 'axios';
+import Image from 'image-js';
 
 export default {
   name: 'HelloWorld',
@@ -52,7 +68,10 @@ export default {
   data() {
     return {
       selectedWorkflow: '',
-      uploadedFiles: null
+      uploadedFiles: null,
+      stateTimes: null,
+      imageUrl: null,
+      convertedImageUrl: null
     }
   },
   methods: {
@@ -73,7 +92,13 @@ export default {
       try {
         const response = await axios.post(`http://127.0.0.1:5000/response`, formData);
         console.log(response.data);
-        // handle successful response
+        this.stateTimes = response.data.state_times;
+        console.log(this.stateTimes);
+        this.imageUrl = response.data.image_path;
+        console.log(this.imageUrl)
+        const tiffImageData = await Image.load(this.imageUrl);
+        const pngImageData = await tiffImageData.toDataURL('image/png');
+        this.convertedImageUrl = pngImageData;
       } catch (error) {
         console.error('Error uploading files:', error);
         // handle error response
@@ -146,6 +171,21 @@ a {
 
 .workflow-selection button:hover {
     background-color: #0056b3;
+}
+
+.output-image-container {
+  max-width: 50%; /* Set the maximum width to 100% of the parent container */
+  overflow: auto; /* Add scrollbars if the image exceeds the container dimensions */
+}
+
+.image-wrapper {
+  max-width: 100%; /* Ensure the image fits within its container */
+  overflow: auto; /* Add scrollbars if the image exceeds the container dimensions */
+}
+
+.output-image {
+  width: 100%; /* Ensure the image occupies the full width of its container */
+  height: auto; /* Maintain the image's aspect ratio */
 }
 
 </style>
