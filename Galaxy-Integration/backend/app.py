@@ -1,9 +1,12 @@
 import os
 from flask import Flask, send_from_directory, request
 from bioblend.galaxy import GalaxyInstance
-import time
 import json
 from flask_cors import CORS
+import os
+import time
+import cv2
+import numpy as np
 
 
 app = Flask(__name__, static_folder='../galaxy-web/dist', static_url_path='/')
@@ -72,12 +75,44 @@ def histogram_normalisation(input_image_path, output_folder):
 
     response_data = {
         'state_times': state_times,
-        'image_path': image_path
+        'output_path': image_path
     }
 
     return response_data
 
 
+def hdab_counts(image_path):
+    # Read the image
+    image = cv2.imread(image_path)
+
+    if image is None:
+        raise ValueError("Image not found or could not be read.")
+
+    # Convert the image to grayscale
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # Apply thresholding to segment the DAB stain
+    _, thresholded_image = cv2.threshold(gray_image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+    # Use the blue channel to extract the blue stain
+    blue_channel = image[:, :, 0]  # Blue channel is at index 0 for BGR images
+
+    # Calculate the Hematoxylin (H) stain by subtracting the blue channel from the grayscale image
+    hematoxylin_image = gray_image - blue_channel
+
+    # Calculate the DAB stain by subtracting the grayscale image from the thresholded image
+    dab_image = thresholded_image - gray_image
+
+    # Count the number of pixels in each stain
+    h_count = int(np.sum(hematoxylin_image > 0))
+    dab_count = int(np.sum(dab_image > 0))
+
+    response_data = {
+        "Hcount": h_count,
+        "DABcount": dab_count
+    }
+
+    return response_data
 
 @app.route('/')
 def serve_vue_app():
@@ -88,12 +123,17 @@ def upload_image():
     if not request.files:
         return 'No file part'
     file = request.files['files']
+    workflow = request.form['workflow']
+
     if file.filename == '':
         return 'No selected file'
     if file:
         filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(filename)
-        data_out = histogram_normalisation(filename, app.config['OUTPUT_FOLDER'])
+        if (workflow == 'workflow1'):
+            data_out = histogram_normalisation(filename, app.config['OUTPUT_FOLDER'])
+        if (workflow == 'workflow2'):
+            data_out = hdab_counts(filename)
         return json.dumps(data_out)
 @app.route('/outputs/<path:filename>')
 def serve_output(filename):

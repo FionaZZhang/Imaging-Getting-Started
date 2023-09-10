@@ -11,7 +11,7 @@
         <select v-model="selectedWorkflow">
             <option disabled value="">Please select a workflow</option>
             <option value="workflow1">Normalize Histogram</option>
-            <option value="workflow2">Image Filtering</option>
+            <option value="workflow2">HDAB Counts</option>
             <option value="workflow3">Segmentation</option>
         </select>
         <button @click="executeWorkflow">Execute Workflow</button>
@@ -24,18 +24,29 @@
         Click here to Upload Images
       </label>
     </div>
+    <br>
     <!-- Display the image -->
-    <div v-if="convertedImageUrl" class="output-image-container">
-      <h3>Output Image</h3>
-      <div class="image-wrapper">
-        <img :src="convertedImageUrl" alt="Output Image" class="output-image">
+    <h3>Output</h3>
+    <div class="output-image-container">
+      <div v-if="isLoading" class="loading-indicator">
+        Loading...
+      </div>
+      <div v-else-if="wf1convertedImageUrl" class="image-wrapper">
+        <img :src="wf1convertedImageUrl" alt="Output Image" class="output-image">
+      </div>
+<!--      <div v-else>-->
+<!--        No image available.-->
+<!--      </div>-->
+      <div v-if="wf2Hcount !== null && wf2DABcount !== null">
+        <p>Hcount: {{ wf2Hcount }}</p>
+        <p>DABcount: {{ wf2DABcount }}</p>
       </div>
     </div>
     <!-- Display State Times -->
-    <div v-if="stateTimes && Object.keys(stateTimes).length > 0">
+    <div v-if="wf1stateTimes && Object.keys(wf1stateTimes).length > 0">
       <h3>State Status</h3>
       <ul>
-        <li v-for="(time, state) in stateTimes" :key="state">
+        <li v-for="(time, state) in wf1stateTimes" :key="state">
           {{ state }}: {{ time }} seconds<br>
         </li>
       </ul>
@@ -68,10 +79,13 @@ export default {
   data() {
     return {
       selectedWorkflow: '',
+      isLoading: false,
       uploadedFiles: null,
-      stateTimes: null,
-      imageUrl: null,
-      convertedImageUrl: null
+      wf1stateTimes: null,
+      wf1imageUrl: null,
+      wf1convertedImageUrl: null,
+      wf2Hcount: null,
+      wf2DABcount: null
     }
   },
   methods: {
@@ -88,20 +102,28 @@ export default {
         formData.append('files', this.uploadedFiles[i]);
       }
       formData.append('workflow', this.selectedWorkflow);
-
+      this.isLoading = true;
       try {
         const response = await axios.post(`http://127.0.0.1:5000/response`, formData);
+        this.isLoading = false;
         console.log(response.data);
-        this.stateTimes = response.data.state_times;
-        console.log(this.stateTimes);
-        this.imageUrl = response.data.image_path;
-        console.log(this.imageUrl)
-        const tiffImageData = await Image.load(this.imageUrl);
-        const pngImageData = await tiffImageData.toDataURL('image/png');
-        this.convertedImageUrl = pngImageData;
+        if (this.selectedWorkflow == 'workflow1') {
+          this.wf1stateTimes = response.data.state_times;
+          console.log(this.wf1stateTimes);
+          this.wf1imageUrl = response.data.output_path;
+          console.log(this.wf1imageUrl)
+          const tiffImageData = await Image.load(this.wf1imageUrl);
+          const pngImageData = await tiffImageData.toDataURL('image/png');
+          this.wf1convertedImageUrl = pngImageData;
+        }
+        if (this.selectedWorkflow == 'workflow2') {
+          this.wf2Hcount = response.data.Hcount;
+          this.wf2DABcount = response.data.DABcount;
+          console.log(this.wf2Hcount);
+          console.log(this.wf2DABcount);
+        }
       } catch (error) {
         console.error('Error uploading files:', error);
-        // handle error response
       }
     }
   }

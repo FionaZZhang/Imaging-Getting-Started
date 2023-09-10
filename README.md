@@ -1,5 +1,12 @@
 Here is the wiki for the imaging project: https://github.com/WEHI-ResearchComputing/Imaging-Getting-Started/wiki
 
+# Dependencies
+``
+
+# How to run using nextflow:
+1. `cd Galaxy-Integration/nextflow-script`
+3. `nextflow run main.nf`
+
 # How to run Customised GUI:
 1. `cd Galaxy-Integration`
 2. `python app.py`
