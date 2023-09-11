@@ -26,30 +26,66 @@
     </div>
     <br>
     <!-- Display the image -->
-    <h3>Output</h3>
-    <div class="output-image-container">
-      <div v-if="isLoading" class="loading-indicator">
-        Loading...
-      </div>
-      <div v-else-if="wf1convertedImageUrl" class="image-wrapper">
-        <img :src="wf1convertedImageUrl" alt="Output Image" class="output-image">
-      </div>
-<!--      <div v-else>-->
-<!--        No image available.-->
-<!--      </div>-->
-      <div v-if="wf2Hcount !== null && wf2DABcount !== null">
-        <p>Hcount: {{ wf2Hcount }}</p>
-        <p>DABcount: {{ wf2DABcount }}</p>
+    <div class="section-box">
+      <h3 class="section-title">Output</h3>
+      <div class="output-image-container">
+        <h4 v-if="isLoading" class="loading-indicator">
+          Loading...
+        </h4>
+        <div v-else-if="wf1convertedImageUrl" class="image-wrapper">
+          <img :src="wf1convertedImageUrl" alt="Output Image" class="output-image">
+        </div>
+  <!--      <div v-else>-->
+  <!--        No image available.-->
+  <!--      </div>-->
+        <!-- Display State Times -->
+        <div v-if="wf1stateTimes && Object.keys(wf1stateTimes).length > 0">
+          <h3>State Status</h3>
+          <ul>
+            <li v-for="(time, state) in wf1stateTimes" :key="state">
+              {{ state }}: {{ time }} seconds<br>
+            </li>
+          </ul>
+        </div>
+        <div v-if="wf2Hcount !== null && wf2DABcount !== null">
+          <p>Hcount: {{ wf2Hcount }}</p>
+          <p>DABcount: {{ wf2DABcount }}</p>
+        </div>
       </div>
     </div>
-    <!-- Display State Times -->
-    <div v-if="wf1stateTimes && Object.keys(wf1stateTimes).length > 0">
-      <h3>State Status</h3>
-      <ul>
-        <li v-for="(time, state) in wf1stateTimes" :key="state">
-          {{ state }}: {{ time }} seconds<br>
-        </li>
-      </ul>
+
+    <!-- view jobs -->
+    <br>
+    <button @click="viewJobs" class="view-jobs-button">View Jobs</button>
+    <br>
+    <div class="section-box jobs-box">
+      <h3 class="section-title">Jobs</h3>
+      <table v-if="displayJobs">
+        <thead>
+          <tr>
+            <th>Job ID</th>
+            <th>Partition</th>
+            <th>Name</th>
+            <th>User</th>
+            <th>Status</th>
+            <th>Memory</th>
+            <th>Time</th>
+            <th>Nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="job in jobStatus" :key="job.job_id">
+            <td>{{ job.job_id }}</td>
+            <td>{{ job.partition }}</td>
+            <td>{{ job.name }}</td>
+            <td>{{ job.user }}</td>
+            <td>{{ job.status }}</td>
+            <td>{{ job.memory }}</td>
+            <td>{{ job.time }}</td>
+            <td>{{ job.nodes }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <h3>References</h3>
     <ul>
@@ -85,7 +121,9 @@ export default {
       wf1imageUrl: null,
       wf1convertedImageUrl: null,
       wf2Hcount: null,
-      wf2DABcount: null
+      wf2DABcount: null,
+      jobStatus: [],
+      displayJobs: false,
     }
   },
   methods: {
@@ -125,16 +163,58 @@ export default {
       } catch (error) {
         console.error('Error uploading files:', error);
       }
-    }
+    },
+    async viewJobs() {
+      await this.fetchJobStatus();
+      this.displayJobs = true;
+    },
+    async fetchJobStatus() {
+        try {
+          const response = await axios.get('http://127.0.0.1:5000/squeue');
+          this.jobStatus = response.data;
+        } catch (error) {
+          console.error('Error fetching job status:', error);
+        }
+      },
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.section-box {
+  background-color: #f0f0f0; /* Grey background color */
+  padding: 20px; /* Adjust padding as needed */
+  border-radius: 5px; /* Rounded corners */
+  margin-bottom: 20px; /* Add spacing between sections */
+  text-align: center; /* Center align text within the box */
+  align-items: center;
+  width: 50vw;
+  height: 100vh;
+}
+
+/* Style for the section titles */
+.section-title {
+  margin-top: 0; /* Remove default top margin for h3 */
+}
+
 h3 {
   margin: 40px 0 0;
 }
+
+h4 {
+  margin: 40px 0 0;
+  text-align: center;
+}
+
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -175,6 +255,7 @@ a {
     gap: 10px;
     align-items: center;
     margin-top: 20px; /* Add some spacing at the top to separate it from other content */
+    height: 100%;
 }
 
 .workflow-selection select, .workflow-selection button {
@@ -195,9 +276,25 @@ a {
     background-color: #0056b3;
 }
 
+.view-jobs-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 16px
+}
+
+.view-jobs-button:hover {
+    background-color: #0056b3;
+}
+
+
 .output-image-container {
-  max-width: 50%; /* Set the maximum width to 100% of the parent container */
+  max-width: 100%; /* Set the maximum width to 100% of the parent container */
   overflow: auto; /* Add scrollbars if the image exceeds the container dimensions */
+  text-align: center;
 }
 
 .image-wrapper {

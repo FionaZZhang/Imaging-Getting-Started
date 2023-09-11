@@ -7,6 +7,8 @@ import os
 import time
 import cv2
 import numpy as np
+import subprocess
+
 
 
 app = Flask(__name__, static_folder='../galaxy-web/dist', static_url_path='/')
@@ -114,9 +116,38 @@ def hdab_counts(image_path):
 
     return response_data
 
+
 @app.route('/')
 def serve_vue_app():
     return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/squeue')
+def squeue():
+    try:
+        # Execute the squeue command to get job status
+        cmd = "squeue -u zhang.ju --format='%.18i %.9P %.8j %.8u %.2t %.10M %.6D %R'"
+        job_status = subprocess.check_output(cmd, shell=True, text=True)
+
+        # Split the output into lines and create a list of dictionaries
+        job_list = []
+        for line in job_status.strip().split('\n'):
+            fields = line.split()
+            job_info = {
+                'job_id': fields[0],
+                'partition': fields[1],
+                'name': fields[2],
+                'user': fields[3],
+                'status': fields[4],
+                'memory': fields[5],
+                'time': fields[6],
+                'nodes': fields[7]
+            }
+            job_list.append(job_info)
+
+        return json.dumps(job_list)
+    except Exception as e:
+        return json.dumps({'error': str(e)})
+
 
 @app.route('/response', methods=['POST'])
 def upload_image():
