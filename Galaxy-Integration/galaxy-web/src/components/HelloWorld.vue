@@ -315,7 +315,7 @@ export default {
         return;
       }
       const formData = new FormData();
-      const jobScript = `#!/bin/bash\n#SBATCH --job-name=${this.jobName}\n#SBATCH --time=0${this.jobTime}:00:00\n#SBATCH --ntasks=${this.jobNodes}\n#SBATCH --mem=${this.jobMem}G\n#SBATCH cpus-per-task=${this.jobCPU}`;
+      const jobScript = "#!/bin/bash\n#SBATCH --job-name=${this.jobName}\n#SBATCH --time=0${this.jobTime}:00:00\n#SBATCH --ntasks=${this.jobNodes}\n#SBATCH --mem=${this.jobMem}G\n#SBATCH cpus-per-task=${this.jobCPU}\n";
       formData.append('script', jobScript);
 
       for (let i = 0; i < this.uploadedFiles.length; i++) {
