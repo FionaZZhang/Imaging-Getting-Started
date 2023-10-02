@@ -1,6 +1,5 @@
 <template>
-  <img alt="Vue logo" src="./assets/WEHI_logo.png">
-  <HelloWorld msg="WEHI RCP Customised Galaxy GUI"/>
+  <HelloWorld/>
 </template>
 
 <script>
