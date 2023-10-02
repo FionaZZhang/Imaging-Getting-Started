@@ -7,9 +7,9 @@ import os
 import time
 import cv2
 import numpy as np
+import ast
 import subprocess
-
-
+import sys
 
 app = Flask(__name__, static_folder='../galaxy-web/dist', static_url_path='/')
 CORS(app)
@@ -115,6 +115,53 @@ def hdab_counts(image_path):
     }
 
     return response_data
+#
+#
+# def extract_required_libraries(script):
+#
+#     # Parse the script to extract import statements
+#     module = ast.parse(script)
+#
+#     # Extract import statements
+#     imports = [node for node in module.body if isinstance(node, ast.Import)]
+#     import_froms = [node for node in module.body if isinstance(node, ast.ImportFrom)]
+#
+#     # Get module names from import statements
+#     required_libraries = []
+#     for import_node in imports + import_froms:
+#         for alias in import_node.names:
+#             required_libraries.append(alias.name)
+#
+#     return required_libraries
+#
+# def install_libraries(libraries):
+#     for library in libraries:
+#         subprocess.check_call([sys.executable, "-m", "pip", "install", library])
+#
+# def custom(script_path, input_data_path):
+#
+#     with open(script_path, 'r') as file:
+#         script = file.read()
+#         print(script)
+#
+#     # Extract required libraries from the script
+#     required_libraries = extract_required_libraries(script)
+#
+#     # Install required libraries if any
+#     if required_libraries:
+#         install_libraries(required_libraries)
+#
+#     # Create a dictionary to store the variables accessible within the script
+#     variables = {}
+#
+#     # Execute the script
+#     exec(script, globals(), variables)
+#     result = variables.get("main", None)
+#
+#     if result is None or not callable(result):
+#         raise ValueError("No callable 'main' function found in the script")
+#
+#     return result(input_data_path)
 
 
 @app.route('/')
@@ -148,11 +195,10 @@ def squeue():
     except Exception as e:
         return json.dumps({'error': str(e)})
 
-
 @app.route('/response', methods=['POST'])
 def upload_image():
     if not request.files:
-        return 'No file part'
+        return 'No file'
     file = request.files['files']
     workflow = request.form['workflow']
 
@@ -165,7 +211,31 @@ def upload_image():
             data_out = histogram_normalisation(filename, app.config['OUTPUT_FOLDER'])
         if (workflow == 'workflow2'):
             data_out = hdab_counts(filename)
+        if (workflow == 'workflow3'):
+
+            input = request.form['inputs']
+            try:
+                # Get the job script from the request
+                sbatch_script = request.form['script']
+
+                # Create a temporary script file to store the job script
+                script_file_path = 'temp_script.sh'
+                control = f'\nmodule load python/3.8.3\npython ./uploads/control.py {filename} {input}'
+                with open(script_file_path, 'w') as script_file:
+                    script_file.write(sbatch_script)
+                    script_file.write(control)
+
+                # Submit the job using sbatch
+                cmd = f'sbatch {script_file_path}'
+                data_out = subprocess.check_output(cmd, shell=True, text=True)
+
+                # Remove the temporary script file
+                subprocess.run(['rm', script_file_path])
+
+            except Exception as e:
+                return json.dumps({'error': str(e)})
         return json.dumps(data_out)
+
 @app.route('/outputs/<path:filename>')
 def serve_output(filename):
     return send_from_directory(app.config['OUTPUT_FOLDER'], filename)
