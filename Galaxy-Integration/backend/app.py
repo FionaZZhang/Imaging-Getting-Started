@@ -30,8 +30,10 @@ app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 galaxy_url = "https://usegalaxy.org.au/"
-galaxy_api_key = "38ae4d7d23fc78506d217aee88282462"
+galaxy_api_key = "******" # replace with your Galaxy API
 gi = GalaxyInstance(url=galaxy_url, key=galaxy_api_key)
+
+milton_acc = "your.account" # replace with your Milton account
 
 def histogram_normalisation(input_image_path, output_folder):
     history_name = 'HistogramNormalisationInput'
@@ -115,8 +117,8 @@ def hdab_counts(image_path):
     }
 
     return response_data
-#
-#
+
+# This section still have some bugs in it unfortunately.
 # def extract_required_libraries(script):
 #
 #     # Parse the script to extract import statements
@@ -172,7 +174,7 @@ def serve_vue_app():
 def squeue():
     try:
         # Execute the squeue command to get job status
-        cmd = "squeue -u zhang.ju --format='%.18i %.9P %.8j %.8u %.2t %.10M %.6D %R'"
+        cmd = "squeue -u " + milton_acc + " --format='%.18i %.9P %.8j %.8u %.2t %.10M %.6D %R'"
         job_status = subprocess.check_output(cmd, shell=True, text=True)
 
         # Split the output into lines and create a list of dictionaries
